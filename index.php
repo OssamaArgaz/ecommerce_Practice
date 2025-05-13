@@ -19,8 +19,20 @@
         if(isset($_POST['ajouter'])){
             $login = $_POST['login'];
             $password = $_POST['password'];
-
-            echo "hello $login, votre mot de passe est : $password.";
+            if(!empty($login) && !empty($password)){
+                require_once 'includes/database.php';
+                $date = date('y-m-d');
+                var_dump($date);
+                $sqlState = $pdo->prepare('INSERT INTO utilisateur VALUE (null, ?, ?, ?)');
+                $sqlState->execute([$login, $password, $date]);
+            }else{
+    ?>
+                <div class="alert alert-danger" role="alert">
+                    please enter your info
+                </div>
+    <?php 
+                
+            }
         }
     ?>
     <form action="" method="post">
