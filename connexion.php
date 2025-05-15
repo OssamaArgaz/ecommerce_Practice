@@ -5,27 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
-    
     <title>Ecommerce</title>
 </head>
 <body>
     
 
-<?php include 'includes/nav.php' ?>
-
+<?php include 'includes/nav.php'?>
 
 <div class="container pt-5">
     <?php
-        if(isset($_POST['ajouter'])){
+        if(isset($_POST['connexion'])){
             $login = $_POST['login'];
             $password = $_POST['password'];
+
             if(!empty($login) && !empty($password)){
                 require_once 'includes/database.php';
-                $date = date('y-m-d');
-                var_dump($date);
-                $sqlState = $pdo->prepare('INSERT INTO utilisateur VALUE (null, ?, ?, ?)');
-                $sqlState->execute([$login, $password, $date]);
-                header('location:connexion.php');
+                $sqlState = $pdo->prepare('SELECT * FROM utilisateur WHERE login=? AND password=?');
+                $sqlState->execute([$login, $password]);
+                if($sqlState->rowCount() >=1){
+                    session_start();
+                    $_SESSION['utilisateur'] = $sqlState->fetch();
+                    header('location:admin.php');
+                }else{
+                    echo "login ou password incorect, veuiller entrer valid info.";
+                }
             }else{
     ?>
                 <div class="alert alert-danger" role="alert">
@@ -43,7 +46,7 @@
         <label for="inputPassword5" class="form-label">Password</label>
         <input type="password" name="password" id="inputPassword5" class="form-control" aria-describedby="passwordHelpBlock">
 
-        <input type="submit" name="ajouter" value="ajouter utilisateur" class="btn btn-primary btn-lg mt-2">
+        <input type="submit" name="connexion" value="connexion" class="btn btn-primary btn-lg mt-2">
     </form>
 </div>
 
