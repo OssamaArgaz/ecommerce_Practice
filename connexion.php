@@ -17,7 +17,6 @@
         if(isset($_POST['connexion'])){
             $login = $_POST['login'];
             $password = $_POST['password'];
-
             if(!empty($login) && !empty($password)){
                 require_once 'includes/database.php';
                 $sqlState = $pdo->prepare('SELECT * FROM utilisateur WHERE login=? AND password=?');
@@ -38,6 +37,7 @@
             }
         }
     ?>
+    <h2>Connexion</h2>
     <form action="" method="post">
         <label for="inputLogin5" class="form-label">login</label>
         <input type="text" name="login" id="inputLogin5" class="form-control" aria-describedby="passwordHelpBlock"> 

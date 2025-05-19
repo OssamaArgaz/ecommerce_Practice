@@ -35,6 +35,7 @@
             }
         }
     ?>
+    <h2>Ajouter Utilisateur</h2>
     <form action="" method="post">
         <label for="inputLogin5" class="form-label">login</label>
         <input type="text" name="login" id="inputLogin5" class="form-control" aria-describedby="passwordHelpBlock"> 
